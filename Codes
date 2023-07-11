@@ -1,0 +1,35 @@
+# Load the required libraries
+library(class)
+
+# Set a random seed for reproducibility
+set.seed(123)
+
+# Create the dataset
+dog_data <- data.frame(
+  weight = c(5, 8, 10, 15, 20, 22, 25, 30),
+  breed = c("Yorkshire Terrier", "Beagle", "Bulldog", "Golden Retriever", 
+            "Labrador Retriever", "German Shepherd", "Rottweiler", "Saint Bernard")
+)
+
+# Define a function for finding dog breed using KNN algorithm
+knn_find_dog_breed <- function(weight, k){
+  # Sort the dataset by weight
+  sorted_dog_data <- dog_data[order(dog_data$weight),]
+  
+  # Apply the K-Nearest Neighbors algorithm
+  breed <- knn(
+    train = sorted_dog_data$weight, 
+    test = weight, 
+    cl = sorted_dog_data$breed, 
+    k = k
+  )
+  
+  # Return the predicted breed
+  return(breed)
+}
+
+# Example usage
+weight <- 12
+k <- 3
+prediction <- knn_find_dog_breed(weight, k)
+print(paste("Predicted dog breed:", prediction))
